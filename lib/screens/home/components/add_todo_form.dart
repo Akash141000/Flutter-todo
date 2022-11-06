@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/models/todo.model.dart';
 
 enum COMPLETED { yes, no }
@@ -87,20 +88,23 @@ class _AddTodoState extends State<AddTodo> {
             ),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                child: const Text('Add'),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    debugPrint("SUBMIT FORM ");
-                    TodoBloc.todoList.add(Todo(
-                        Random(100).toString(),
-                        nameEditingController.text,
-                        descriptionEditingController.text,
-                        _completed == COMPLETED.yes ? true : false));
-                    debugPrint("TODO ADDED");
-                  }
-                },
+              child: BlocBuilder<TodoBloc, List<Todo>>(
+                builder: (context, state) => ElevatedButton(
+                  child: const Text('Add'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      debugPrint("SUBMIT FORM ");
+                      context.read<TodoBloc>().addTodo(Todo(
+                          Random(100).toString(),
+                          nameEditingController.text,
+                          descriptionEditingController.text,
+                          _completed == COMPLETED.yes ? true : false));
+
+                      debugPrint("TODO ADDED");
+                    }
+                  },
+                ),
               ),
             )
           ],

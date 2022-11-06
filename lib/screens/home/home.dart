@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/models/todo.model.dart';
 import 'package:todo/screens/home/fragments/create_todo.dart';
 import 'package:todo/screens/home/fragments/profile.dart';
 import 'package:todo/screens/home/fragments/todo_list.dart';
@@ -35,10 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Container(
-          color: Colors.transparent,
-          width: double.infinity,
-          height: double.infinity,
-          child: widget.currentWidget[_currentIndex]),
+        color: Colors.transparent,
+        width: double.infinity,
+        height: double.infinity,
+        child: BlocProvider(
+            create: (_) => TodoBloc(),
+            child: widget.currentWidget[_currentIndex]),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.create), label: 'Todo'),

@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+
 class Todo {
   String id;
   String name;
@@ -6,9 +11,8 @@ class Todo {
   Todo(this.id, this.name, this.description, this.completed);
 }
 
-class TodoBloc {
-  static List<Todo> todoList = [
-    Todo('1', 'One', 'Description of first todo', false),
-    Todo('2', 'Two', 'Description of second todo', true)
-  ];
+class TodoBloc extends Cubit<List<Todo>> {
+  TodoBloc() : super([Todo('1', 'One', 'Description of first todo', false)]);
+
+  void addTodo(Todo newTodo) => emit([...state, newTodo]);
 }
