@@ -35,6 +35,12 @@ class _AddTodoState extends State<AddTodo> {
           children: [
             TextFormField(
               controller: nameEditingController,
+              validator: ((value) {
+                if (value != null && value.isEmpty) {
+                  return "Name is required!";
+                }
+                return null;
+              }),
               decoration: const InputDecoration(
                 label: Text('Name'),
               ),
@@ -42,6 +48,12 @@ class _AddTodoState extends State<AddTodo> {
             TextFormField(
               maxLines: 4,
               controller: descriptionEditingController,
+              validator: ((value) {
+                if (value != null && value.isEmpty) {
+                  return "Description is required!";
+                }
+                return null;
+              }),
               decoration: const InputDecoration(
                 label: Text('Description'),
               ),

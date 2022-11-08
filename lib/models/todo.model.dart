@@ -12,7 +12,7 @@ class Todo {
 }
 
 class TodoBloc extends Cubit<List<Todo>> {
-  TodoBloc() : super([Todo('1', 'One', 'Description of first todo', false)]);
+  TodoBloc() : super([Todo('1', 'One', 'Description of first todo', true)]);
 
   void addTodo(Todo newTodo) => emit([...state, newTodo]);
 }
