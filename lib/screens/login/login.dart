@@ -22,62 +22,67 @@ class LoginScreen extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         child: BlocBuilder<AuthBloc, Auth?>(
-          builder: ((context, authState) =>
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: TextFormField(
-                    validator: ((value) {
-                      if (value != null && value.isEmpty) {
-                        return "Email is required!";
-                      }
-                      return null;
-                    }),
-                    decoration: const InputDecoration(
-                      label: Text('Email'),
-                      contentPadding: EdgeInsets.symmetric(vertical: 25),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: TextFormField(
-                    obscureText: true,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    validator: ((value) {
-                      if (value != null) {
-                        if (value.isEmpty) {
-                          return "Password is required!";
-                        }
-                        if (value.length < 8) {
-                          return "Password must be minimum 8 characters";
-                        }
-                      }
-                      return null;
-                    }),
-                    decoration: const InputDecoration(
-                        label: Text('Password'),
-                        contentPadding: EdgeInsets.symmetric(vertical: 25)),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        debugPrint('LOGIN');
-                        context.read<AuthBloc>().setToken('LOGIN');
-                        Navigator.pushReplacementNamed(context, '/');
-                      }
-                    },
-                    child: const Text('SUBMIT'),
-                  ),
-                ),
-              ])),
+          builder: ((context, authState) => Form(
+                key: _formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: TextFormField(
+                          validator: ((value) {
+                            if (value != null && value.isEmpty) {
+                              return "Email is required!";
+                            }
+                            return null;
+                          }),
+                          decoration: const InputDecoration(
+                            label: Text('Email'),
+                            contentPadding: EdgeInsets.symmetric(vertical: 25),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: TextFormField(
+                          obscureText: true,
+                          autocorrect: false,
+                          enableSuggestions: false,
+                          validator: ((value) {
+                            if (value != null) {
+                              if (value.isEmpty) {
+                                return "Password is required!";
+                              }
+                              if (value.length < 8) {
+                                return "Password must be minimum 8 characters";
+                              }
+                            }
+                            return null;
+                          }),
+                          decoration: const InputDecoration(
+                              label: Text('Password'),
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 25)),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              debugPrint('LOGIN');
+                              context.read<AuthBloc>().setToken('LOGIN');
+                              Navigator.pushReplacementNamed(context, '/');
+                            }
+                          },
+                          child: const Text('SUBMIT'),
+                        ),
+                      ),
+                    ]),
+              )),
         ),
       ),
     );
