@@ -5,7 +5,13 @@ import 'package:todo/models/auth.model.dart';
 const loginRoute = '/login';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController passwordEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +21,18 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         height: double.infinity,
         width: double.infinity,
-        child: BlocBuilder<AuthBloc, Auth>(
+        child: BlocBuilder<AuthBloc, Auth?>(
           builder: ((context, authState) =>
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   child: TextFormField(
+                    validator: ((value) {
+                      if (value != null && value.isEmpty) {
+                        return "Email is required!";
+                      }
+                      return null;
+                    }),
                     decoration: const InputDecoration(
                       label: Text('Email'),
                       contentPadding: EdgeInsets.symmetric(vertical: 25),
@@ -33,6 +45,17 @@ class LoginScreen extends StatelessWidget {
                     obscureText: true,
                     autocorrect: false,
                     enableSuggestions: false,
+                    validator: ((value) {
+                      if (value != null) {
+                        if (value.isEmpty) {
+                          return "Password is required!";
+                        }
+                        if (value.length < 8) {
+                          return "Password must be minimum 8 characters";
+                        }
+                      }
+                      return null;
+                    }),
                     decoration: const InputDecoration(
                         label: Text('Password'),
                         contentPadding: EdgeInsets.symmetric(vertical: 25)),
@@ -44,9 +67,12 @@ class LoginScreen extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ElevatedButton(
                     onPressed: () {
-                      debugPrint('LOGIN');
-                      context.read<AuthBloc>().setToken('LOGIN');
-                      Navigator.pushReplacementNamed(context, '/');
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        debugPrint('LOGIN');
+                        context.read<AuthBloc>().setToken('LOGIN');
+                        Navigator.pushReplacementNamed(context, '/');
+                      }
                     },
                     child: const Text('SUBMIT'),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/signup/signup.dart';
 
@@ -22,16 +23,18 @@ class AuthScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
+                height: 50,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, loginRoute),
+                  onPressed: () => context.push(loginRoute),
                   child: const Text('LOGIN'),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 width: double.infinity,
+                height: 50,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, registerRoute),
+                  onPressed: () => context.push(registerRoute),
                   child: const Text('REGISTER'),
                 ),
               ),

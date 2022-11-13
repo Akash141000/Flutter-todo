@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo/main.dart';
 import 'package:todo/models/auth.model.dart';
 import 'package:todo/models/todo.model.dart';
@@ -69,15 +70,12 @@ class ProfileFragment extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 width: double.infinity,
-                child: BlocBuilder<AuthBloc, Auth>(
+                child: BlocBuilder<AuthBloc, Auth?>(
                   builder: (context, authState) => ElevatedButton(
                       onPressed: () {
                         debugPrint('LOGOUT');
                         context.read<AuthBloc>().setToken(null);
-                        Navigator.pushReplacementNamed(
-                          context,
-                          defaultRoute,
-                        );
+                        context.go(defaultRoute);
                       },
                       child: const Text('LOGOUT')),
                 ),

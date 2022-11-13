@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/models/auth.model.dart';
-import 'package:todo/screens/auth/auth.dart';
-import 'package:todo/screens/home/home.dart';
-import 'package:todo/screens/login/login.dart';
-import 'package:todo/screens/signup/signup.dart';
+import 'package:todo/routes/navigation.dart';
 import 'package:todo/utils/utils.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await UserSharedPreferences.init();
   runApp(const MyApp());
 }
 
@@ -21,20 +22,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: BlocBuilder<AuthBloc, Auth>(
-        builder: ((context, authState) => MaterialApp(
+      child: BlocBuilder<AuthBloc, Auth?>(
+        builder: ((context, authState) => MaterialApp.router(
               title: 'My Todo',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
-              routes: authState.token != null
-                  ? {
-                      loginRoute: (context) => const LoginScreen(),
-                      registerRoute: (context) => const SignUpScreen(),
-                      defaultRoute: ((context) => const AuthScreen()),
-                    }
-                  : {defaultRoute: ((context) => const AuthScreen())},
+              routerConfig: router,
             )),
       ),
     );

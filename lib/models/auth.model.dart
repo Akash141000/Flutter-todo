@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/utils/utils.dart';
 
 class Auth {
   String? token;
@@ -9,11 +10,17 @@ class Auth {
   Auth(this.token);
 }
 
-class AuthBloc extends Cubit<Auth> {
-  AuthBloc() : super(Auth('LOGIN'));
+class AuthBloc extends Cubit<Auth?> {
+  AuthBloc() : super(null);
 
-  void setToken(String? token) {
+  void setToken(String? token) async {
     debugPrint('SET TOKEN');
+    await UserSharedPreferences.setToken(token);
     emit(Auth(token));
+  }
+
+  void removeToken() async {
+    await UserSharedPreferences.removeToken();
+    emit(null);
   }
 }
