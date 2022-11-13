@@ -72,10 +72,11 @@ class ProfileFragment extends StatelessWidget {
                 width: double.infinity,
                 child: BlocBuilder<AuthBloc, Auth?>(
                   builder: (context, authState) => ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         debugPrint('LOGOUT');
-                        context.read<AuthBloc>().setToken(null);
-                        context.go(defaultRoute);
+                        context.read<AuthBloc>().removeToken().then((value) {
+                          GoRouter.of(context).pushNamed(defaultRoute);
+                        });
                       },
                       child: const Text('LOGOUT')),
                 ),

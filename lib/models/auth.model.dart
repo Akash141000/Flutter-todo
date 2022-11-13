@@ -13,14 +13,17 @@ class Auth {
 class AuthBloc extends Cubit<Auth?> {
   AuthBloc() : super(null);
 
-  void setToken(String? token) async {
+  Future<void> setToken(String? token) async {
     debugPrint('SET TOKEN');
     await UserSharedPreferences.setToken(token);
     emit(Auth(token));
+    return;
   }
 
-  void removeToken() async {
+  Future<void> removeToken() async {
+    debugPrint('REMOVE TOKEN');
     await UserSharedPreferences.removeToken();
     emit(null);
+    return;
   }
 }

@@ -5,33 +5,56 @@ import 'package:todo/screens/auth/auth.dart';
 import 'package:todo/screens/home/home.dart';
 import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/signup/signup.dart';
+import 'package:todo/utils/utils.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
+      name: authRoute,
       path: authRoute,
-      builder: (context, state) => const AuthScreen(),
+      builder: (context, state) {
+        return const AuthScreen();
+      },
     ),
     GoRoute(
-      path: homeRoute,
-      builder: (context, state) => const HomeScreen(),
-    ),
+        name: homeRoute,
+        path: homeRoute,
+        builder: (context, state) {
+          if (UserSharedPreferences.authToken == null) {
+            return const AuthScreen();
+          }
+          return const HomeScreen();
+        }),
     GoRoute(
+      name: loginRoute,
       path: loginRoute,
       builder: (context, state) => LoginScreen(),
     ),
     GoRoute(
+      name: registerRoute,
       path: registerRoute,
       builder: (context, state) => SignUpScreen(),
     ),
     GoRoute(
+      name: defaultRoute,
       path: defaultRoute,
-      builder: (context, state) => const AuthScreen(),
+      builder: (context, state) {
+        debugPrint('TOK');
+        debugPrint(UserSharedPreferences.authToken);
+        if (UserSharedPreferences.authToken != null) {
+          return const HomeScreen();
+        }
+        return const AuthScreen();
+      },
     ),
   ],
   errorPageBuilder: (context, state) => MaterialPage(
       key: state.pageKey,
       child: const Scaffold(
-        body: Center(child: Text('ERROR OCCURED!')),
+        body: Center(
+            child: Text(
+          'Error Occured!',
+          style: TextStyle(color: Colors.red),
+        )),
       )),
 );

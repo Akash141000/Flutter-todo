@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo/main.dart';
 import 'package:todo/models/auth.model.dart';
 
 const loginRoute = '/login';
@@ -70,12 +72,16 @@ class LoginScreen extends StatelessWidget {
                         height: 50,
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('LOGIN');
-                              context.read<AuthBloc>().setToken('LOGIN');
-                              Navigator.pushReplacementNamed(context, '/');
+                              context
+                                  .read<AuthBloc>()
+                                  .setToken('LOGIN')
+                                  .then((value) {
+                                GoRouter.of(context).pushNamed(defaultRoute);
+                              });
                             }
                           },
                           child: const Text('SUBMIT'),

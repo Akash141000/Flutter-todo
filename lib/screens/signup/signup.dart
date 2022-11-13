@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo/main.dart';
 import 'package:todo/models/auth.model.dart';
 
 const registerRoute = '/register';
@@ -101,8 +103,11 @@ class SignUpScreen extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('REGISTER');
-                              context.read<AuthBloc>().setToken('REGISTER');
-                              Navigator.pushReplacementNamed(context, '/');
+                              context
+                                  .read<AuthBloc>()
+                                  .setToken('REGISTER')
+                                  .then((value) => GoRouter.of(context)
+                                      .pushNamed(defaultRoute));
                             }
                           },
                           child: const Text('SUBMIT'),
