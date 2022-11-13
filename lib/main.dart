@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/models/auth.model.dart';
+import 'package:todo/screens/auth/auth.dart';
 import 'package:todo/screens/home/home.dart';
 import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/signup/signup.dart';
+import 'package:todo/utils/utils.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+const defaultRoute = '/';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,17 +19,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Todo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: BlocBuilder<AuthBloc, Auth>(
+        builder: ((context, authState) => MaterialApp(
+              title: 'My Todo',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              routes: authState.token != null
+                  ? {
+                      loginRoute: (context) => const LoginScreen(),
+                      registerRoute: (context) => const SignUpScreen(),
+                      defaultRoute: ((context) => const AuthScreen()),
+                    }
+                  : {defaultRoute: ((context) => const AuthScreen())},
+            )),
       ),
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/': ((context) => const HomeScreen()),
-      },
     );
   }
 }

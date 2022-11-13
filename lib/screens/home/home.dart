@@ -1,11 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/models/todo.model.dart';
 import 'package:todo/screens/home/fragments/create_todo.dart';
 import 'package:todo/screens/home/fragments/profile.dart';
 import 'package:todo/screens/home/fragments/todo_list.dart';
+
+const homeRoute = '/home';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
