@@ -75,7 +75,7 @@ class ProfileFragment extends StatelessWidget {
                       onPressed: () async {
                         debugPrint('LOGOUT');
                         context.read<AuthBloc>().removeToken().then((value) {
-                          GoRouter.of(context).pushNamed(defaultRoute);
+                          GoRouter.of(context).go(defaultRoute);
                         });
                       },
                       child: const Text('LOGOUT')),

@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                                   .read<AuthBloc>()
                                   .setToken('LOGIN')
                                   .then((value) {
-                                GoRouter.of(context).pushNamed(defaultRoute);
+                                GoRouter.of(context).go(defaultRoute);
                               });
                             }
                           },
