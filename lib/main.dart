@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/api/client.dart';
 import 'package:todo/models/auth.model.dart';
 import 'package:todo/routes/navigation.dart';
 import 'package:todo/store/shared_preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ApiClient();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await UserSharedPreferences.init();
   runApp(const MyApp());

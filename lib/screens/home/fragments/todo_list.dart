@@ -8,16 +8,16 @@ class TodoListFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Expanded(
-        child: BlocBuilder<TodoBloc, List<Todo>>(
-          builder: (context, state) => ListView.builder(
+    return BlocBuilder<TodoBloc, List<Todo>>(
+      builder: (context, state) => Column(children: [
+        Expanded(
+          child: ListView.builder(
             shrinkWrap: true,
             itemCount: state.length,
             itemBuilder: ((context, index) => TodoListItem(state[index])),
           ),
         ),
-      ),
-    ]);
+      ]),
+    );
   }
 }
