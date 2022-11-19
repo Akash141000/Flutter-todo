@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/utils/utils.dart';
+import 'package:todo/store/shared_preference.dart';
 
 class Auth {
   String? token;

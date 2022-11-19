@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/models/auth.model.dart';
 import 'package:todo/routes/navigation.dart';
-import 'package:todo/utils/utils.dart';
+import 'package:todo/store/shared_preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

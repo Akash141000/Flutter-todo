@@ -9,7 +9,7 @@ class ProfileFragment extends StatelessWidget {
   const ProfileFragment({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, [bool mounted = true]) {
     return Container(
       padding: const EdgeInsets.all(10),
       width: double.infinity,
@@ -74,9 +74,11 @@ class ProfileFragment extends StatelessWidget {
                   builder: (context, authState) => ElevatedButton(
                       onPressed: () async {
                         debugPrint('LOGOUT');
-                        context.read<AuthBloc>().removeToken().then((value) {
-                          GoRouter.of(context).go(defaultRoute);
-                        });
+                        await context.read<AuthBloc>().removeToken();
+                        if (!mounted) {
+                          return;
+                        }
+                        GoRouter.of(context).replace(defaultRoute);
                       },
                       child: const Text('LOGOUT')),
                 ),
