@@ -4,6 +4,7 @@ import 'package:todo/api/apis.dart';
 import 'package:todo/models/todo/todo.model.dart';
 
 class TodoBloc extends Cubit<List<Todo>> {
+  static final todoBlocInstance = TodoBloc();
   TodoBloc() : super([Todo('1', 'One', 'Description of first todo', true)]);
 
   void addTodo(Todo newTodo) => emit([...state, newTodo]);

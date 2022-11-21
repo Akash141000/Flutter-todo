@@ -5,6 +5,7 @@ import 'package:todo/store/shared_preference.dart';
 import 'auth.model.dart';
 
 class AuthBloc extends Cubit<Auth?> {
+  static final authBlocInstance = AuthBloc();
   AuthBloc() : super(null);
 
   Future<void> setToken(String? token) async {
