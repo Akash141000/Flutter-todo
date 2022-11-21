@@ -7,8 +7,6 @@ import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/signup/signup.dart';
 import 'package:todo/store/shared_preference.dart';
 
-import '../api/client.dart';
-
 final router = GoRouter(
   routes: [
     GoRoute(
