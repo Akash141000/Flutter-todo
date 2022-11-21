@@ -7,6 +7,8 @@ import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/signup/signup.dart';
 import 'package:todo/store/shared_preference.dart';
 
+import '../api/client.dart';
+
 final router = GoRouter(
   routes: [
     GoRoute(
@@ -23,7 +25,7 @@ final router = GoRouter(
           if (UserSharedPreferences.authToken == null) {
             return const AuthScreen();
           }
-          return const HomeScreen();
+          return HomeScreen();
         }),
     GoRoute(
       name: loginRoute,
@@ -42,7 +44,7 @@ final router = GoRouter(
         debugPrint(UserSharedPreferences.authToken);
         if (UserSharedPreferences.authToken != null) {
           debugPrint('TOK NOT REMOVED');
-          return const HomeScreen();
+          return HomeScreen();
         }
         debugPrint('TOK REMOVED');
         return const AuthScreen();

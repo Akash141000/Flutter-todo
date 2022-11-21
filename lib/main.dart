@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/api/client.dart';
-import 'package:todo/models/auth.model.dart';
+import 'package:todo/models/auth/auth.model.dart';
+import 'package:todo/models/bloc_observer/observer.bloc.dart';
 import 'package:todo/routes/navigation.dart';
 import 'package:todo/store/shared_preference.dart';
 
+import 'models/auth/auth.bloc.dart';
+
 void main() async {
+  Bloc.observer = GlobalBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   ApiClient();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

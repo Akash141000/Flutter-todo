@@ -2,13 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/store/shared_preference.dart';
 
-class Auth {
-  String? token;
-  // String deviceId;
-  // String versionNumber;
-  // String platform;
-  Auth(this.token);
-}
+import 'auth.model.dart';
 
 class AuthBloc extends Cubit<Auth?> {
   AuthBloc() : super(null);

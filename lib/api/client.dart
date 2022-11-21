@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
+import 'package:rxdart/subjects.dart';
 
 class ApiClient {
   static late final Dio dio;
+  static BehaviorSubject apiErrors = BehaviorSubject();
 
   ApiClient() {
     BaseOptions options = BaseOptions(
@@ -12,5 +16,21 @@ class ApiClient {
           'content-type': 'application/json',
         });
     dio = Dio(options);
+
+    dio.interceptors.add(InterceptorsWrapper(
+        // onRequest: requestHandler,
+        onError: errorHandler));
+  }
+
+  requestHandler(RequestOptions options, RequestInterceptorHandler handler) {
+    print("REQUEST  $handler");
+  }
+
+  // void responseHandler(
+  //     Response<dynamic> response, ResponseInterceptorHandler handler) {}
+
+  errorHandler(DioError error, ErrorInterceptorHandler handler) {
+    apiErrors.add(error.message);
+    print("INTERCEPTED ERROR >>> ${error.message}");
   }
 }

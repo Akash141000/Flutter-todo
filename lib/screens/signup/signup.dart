@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/main.dart';
-import 'package:todo/models/auth.model.dart';
+import 'package:todo/models/auth/auth.model.dart';
+
+import '../../models/auth/auth.bloc.dart';
 
 const registerRoute = '/register';
 
