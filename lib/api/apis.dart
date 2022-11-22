@@ -8,6 +8,14 @@ class Apis {
     if (response.data?['todoList'] is List) {
       return response.data;
     }
-    return {'todoList': []};
+    return response;
+  }
+
+  static loginAPI(Map<String, dynamic> postData) async {
+    var response = await ApiClient.dio.post('/login', data: postData);
+    if (response.data?['token']) {
+      return response.data;
+    }
+    return response;
   }
 }
