@@ -91,6 +91,7 @@ class LoginScreen extends StatelessWidget {
                                     error.message,
                                   ),
                                 ));
+                                return;
                               }
                               if (!mounted) {
                                 return;

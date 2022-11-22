@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/main.dart';
 import 'package:todo/models/auth/auth.model.dart';
+import 'package:todo/utils/utils.dart';
 
 import '../../models/auth/auth.bloc.dart';
 
@@ -20,7 +21,7 @@ class SignUpScreen extends StatelessWidget {
       TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, [bool mounted = true]) {
     return Scaffold(
       appBar: AppBar(title: const Text('Register')),
       body: BlocBuilder<AuthBloc, Auth?>(
@@ -101,15 +102,29 @@ class SignUpScreen extends StatelessWidget {
                         height: 50,
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('REGISTER');
-                              context.read<AuthBloc>().signup({
-                                'email': emailEditingController.value.text,
-                                'password': passwordEditingController.value.text
-                              }).then((value) =>
-                                  GoRouter.of(context).pushNamed(defaultRoute));
+                              try {
+                                await context.read<AuthBloc>().signup({
+                                  'email': emailEditingController.value.text,
+                                  'password':
+                                      passwordEditingController.value.text
+                                });
+                              } on ApiError catch (error) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                    error.message,
+                                  ),
+                                ));
+                                return;
+                              }
+                              if (!mounted) {
+                                return;
+                              }
+                              GoRouter.of(context).pushNamed(defaultRoute);
                             }
                           },
                           child: const Text('SUBMIT'),
