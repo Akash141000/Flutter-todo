@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/main.dart';
 import 'package:todo/models/auth/auth.model.dart';
+import 'package:todo/utils/utils.dart';
 import '../../models/auth/auth.bloc.dart';
 
 const loginRoute = '/login';
@@ -17,7 +18,7 @@ class LoginScreen extends StatelessWidget {
       TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, [bool mounted = true]) {
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Container(
@@ -77,12 +78,24 @@ class LoginScreen extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('LOGIN');
-                              context.read<AuthBloc>().login({
-                                'email': emailEditingController.value.text,
-                                'password': passwordEditingController.value.text
-                              }).then((value) {
-                                GoRouter.of(context).go(defaultRoute);
-                              });
+                              try {
+                                await context.read<AuthBloc>().login({
+                                  'email': emailEditingController.value.text,
+                                  'password':
+                                      passwordEditingController.value.text
+                                });
+                              } on ApiError catch (error) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                    error.message,
+                                  ),
+                                ));
+                              }
+                              if (!mounted) {
+                                return;
+                              }
+                              GoRouter.of(context).go(defaultRoute);
                             }
                           },
                           child: const Text('SUBMIT'),

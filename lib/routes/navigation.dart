@@ -41,10 +41,10 @@ final router = GoRouter(
       builder: (context, state) {
         debugPrint(UserSharedPreferences.authToken);
         if (UserSharedPreferences.authToken != null) {
-          debugPrint('TOK NOT REMOVED');
+          debugPrint('Authorized');
           return HomeScreen();
         }
-        debugPrint('TOK REMOVED');
+        debugPrint('UnAuthorized');
         return const AuthScreen();
       },
     ),

@@ -11,8 +11,8 @@ class TodoBloc extends Cubit<List<Todo>> {
 
   void getTodos() async {
     var response = await Apis.getTodosAPI();
-    if (kDebugMode) {
-      print(response);
+    if (!response.data?['todoList'] is List) {
+      return;
     }
     for (var e in List.from(response['todoList'])) {
       addTodo(Todo(e['_id'], e['name'], e['description'], e['completed']));
