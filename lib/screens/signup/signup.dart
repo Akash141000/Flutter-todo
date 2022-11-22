@@ -105,11 +105,11 @@ class SignUpScreen extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('REGISTER');
-                              context
-                                  .read<AuthBloc>()
-                                  .setToken('REGISTER')
-                                  .then((value) => GoRouter.of(context)
-                                      .pushNamed(defaultRoute));
+                              context.read<AuthBloc>().signup({
+                                'email': emailEditingController.value.text,
+                                'password': passwordEditingController.value.text
+                              }).then((value) =>
+                                  GoRouter.of(context).pushNamed(defaultRoute));
                             }
                           },
                           child: const Text('SUBMIT'),

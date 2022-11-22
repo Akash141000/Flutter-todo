@@ -18,4 +18,12 @@ class Apis {
     }
     return response;
   }
+
+  static signupAPI(Map<String, dynamic> postData) async {
+    var response = await ApiClient.dio.post('/signup', data: postData);
+    if (response.data?['token']) {
+      return response.data;
+    }
+    return response;
+  }
 }

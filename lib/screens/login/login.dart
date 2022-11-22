@@ -77,10 +77,10 @@ class LoginScreen extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               debugPrint('LOGIN');
-                              context
-                                  .read<AuthBloc>()
-                                  .setToken('LOGIN')
-                                  .then((value) {
+                              context.read<AuthBloc>().login({
+                                'email': emailEditingController.value.text,
+                                'password': passwordEditingController.value.text
+                              }).then((value) {
                                 GoRouter.of(context).go(defaultRoute);
                               });
                             }
