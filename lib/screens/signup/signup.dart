@@ -37,6 +37,7 @@ class SignUpScreen extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         child: TextFormField(
+                          controller: emailEditingController,
                           validator: ((value) {
                             if (value != null && value.isEmpty) {
                               return "Email is required!";
@@ -52,6 +53,7 @@ class SignUpScreen extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         child: TextFormField(
+                          controller: passwordEditingController,
                           obscureText: true,
                           autocorrect: false,
                           enableSuggestions: false,
@@ -78,14 +80,17 @@ class SignUpScreen extends StatelessWidget {
                           obscureText: true,
                           autocorrect: false,
                           enableSuggestions: false,
+                          controller: confirmPasswordEditingController,
                           validator: (confirmPassword) {
                             if (confirmPassword != null) {
                               if (confirmPassword.isEmpty) {
                                 return "Confirm Password is required!";
                               }
                               if (confirmPassword !=
-                                  confirmPasswordEditingController.value
-                                      .toString()) {
+                                  passwordEditingController.value.text) {
+                                debugPrint(confirmPassword);
+                                debugPrint(
+                                    passwordEditingController.value.text);
                                 return "Confirm password must be same as password!";
                               }
                             }

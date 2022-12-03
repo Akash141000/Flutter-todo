@@ -1,7 +1,11 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:todo/store/shared_preference.dart';
+import 'package:todo/utils/utils.dart';
 
 class ApiClient {
   static late final Dio dio;
@@ -28,14 +32,12 @@ class ApiClient {
 
   void responseHandler(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
-    print("RESPONSE >> $response");
+    print("API RESPONSE >> ${response.data}");
     return handler.next(response);
   }
 
   errorHandler(DioError error, ErrorInterceptorHandler handler) {
-    // apiErrors.add(error.message);
     print("INTERCEPTED ERROR >>> ${error.response}");
-    print(error);
     return handler.next(error);
   }
 }

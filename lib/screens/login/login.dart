@@ -13,9 +13,10 @@ class LoginScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController emailEditingController =
+      TextEditingController(text: "akash@gmail.com");
   final TextEditingController passwordEditingController =
-      TextEditingController();
+      TextEditingController(text: "asdfghjkl");
 
   @override
   Widget build(BuildContext context, [bool mounted = true]) {
@@ -34,6 +35,7 @@ class LoginScreen extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         child: TextFormField(
+                          controller: emailEditingController,
                           validator: ((value) {
                             if (value != null && value.isEmpty) {
                               return "Email is required!";
@@ -49,6 +51,7 @@ class LoginScreen extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         child: TextFormField(
+                          controller: passwordEditingController,
                           obscureText: true,
                           autocorrect: false,
                           enableSuggestions: false,
@@ -77,7 +80,8 @@ class LoginScreen extends StatelessWidget {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              debugPrint('LOGIN');
+                              debugPrint(
+                                  'LOGIN ${emailEditingController.value.text}');
                               try {
                                 await context.read<AuthBloc>().login({
                                   'email': emailEditingController.value.text,
