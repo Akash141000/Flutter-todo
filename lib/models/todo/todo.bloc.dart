@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:todo/api/apis.dart';
 import 'package:todo/models/todo/todo.model.dart';
 
@@ -11,11 +10,10 @@ class TodoBloc extends Cubit<List<Todo>> {
 
   void getTodos() async {
     var response = await Apis.getTodosAPI();
-    if (!response.data?['todoList'] is List) {
-      return;
-    }
-    for (var e in List.from(response['todoList'])) {
-      addTodo(Todo(e['_id'], e['name'], e['description'], e['completed']));
+    var data = response["data"];
+    for (var todo in List.from(data['todoList'])) {
+      addTodo(Todo(
+          todo['_id'], todo['name'], todo['description'], todo['completed']));
     }
   }
 }

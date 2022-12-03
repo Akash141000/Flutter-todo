@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ApiError extends Error {
   late String message;
@@ -12,5 +13,11 @@ class ApiError extends Error {
     } else {
       message = error.message;
     }
+  }
+}
+
+class Helper {
+  static Map<String, dynamic> responseValidator(Response response) {
+    return response.data;
   }
 }

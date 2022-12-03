@@ -13,11 +13,11 @@ class AuthBloc extends Cubit<Auth?> {
 
   Future<dynamic> login(Map<String, String> userCredentials) async {
     try {
-      var token = await Apis.loginAPI(userCredentials);
-      if (token is String) {
-        await UserSharedPreferences.setToken(token);
-        emit(Auth(token));
-      }
+      var response = await Apis.loginAPI(userCredentials);
+      var data = response["data"];
+      var token = data["accessToken"];
+      await UserSharedPreferences.setToken(token);
+      emit(Auth(token));
       return;
     } on DioError catch (error) {
       throw ApiError(error);
@@ -26,11 +26,11 @@ class AuthBloc extends Cubit<Auth?> {
 
   Future<dynamic> signup(Map<String, String> userCredentials) async {
     try {
-      var token = await Apis.signupAPI(userCredentials);
-      if (token is String) {
-        await UserSharedPreferences.setToken(token);
-        emit(Auth(token));
-      }
+      var response = await Apis.signupAPI(userCredentials);
+      var data = response["data"];
+      var token = data["accessToken"];
+      await UserSharedPreferences.setToken(token);
+      emit(Auth(token));
       return;
     } on DioError catch (error) {
       throw ApiError(error);

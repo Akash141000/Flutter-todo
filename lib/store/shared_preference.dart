@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/api/client.dart';
 
 class UserSharedPreferences {
   static String? authToken;
@@ -7,7 +10,8 @@ class UserSharedPreferences {
 
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
-    await getToken();
+    String authToken = await getToken();
+    ApiClient.dio.options.headers[HttpHeaders.authorizationHeader] = authToken;
   }
 
   static Future setToken(String? token) async {
