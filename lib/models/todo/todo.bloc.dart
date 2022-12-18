@@ -4,7 +4,7 @@ import 'package:todo/models/todo/todo.model.dart';
 
 class TodoBloc extends Cubit<List<Todo>> {
   static final todoBlocInstance = TodoBloc();
-  TodoBloc() : super([Todo('1', 'One', 'Description of first todo', true)]);
+  TodoBloc() : super([]);
 
   void addTodo(Todo newTodo) => emit([...state, newTodo]);
 
@@ -15,6 +15,11 @@ class TodoBloc extends Cubit<List<Todo>> {
       addTodo(Todo(
           todo['_id'], todo['name'], todo['description'], todo['completed']));
     }
+    return;
+  }
+
+  Future<void> clearTodos() async {
+    emit([]);
     return;
   }
 }

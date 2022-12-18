@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/api/apis.dart';
+import 'package:todo/models/todo/todo.bloc.dart';
 import 'package:todo/store/shared_preference.dart';
 import 'package:todo/utils/utils.dart';
 
@@ -40,6 +41,7 @@ class AuthBloc extends Cubit<Auth?> {
   Future<void> removeToken() async {
     debugPrint('REMOVE TOKEN');
     await UserSharedPreferences.removeToken();
+    await TodoBloc.todoBlocInstance.clearTodos();
     emit(null);
     return;
   }
