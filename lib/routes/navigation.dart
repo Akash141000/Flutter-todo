@@ -20,7 +20,8 @@ final router = GoRouter(
         name: homeRoute,
         path: homeRoute,
         builder: (context, state) {
-          if (UserSharedPreferences.authToken == null) {
+          if (UserSharedPreferences.authToken != null &&
+              UserSharedPreferences.authToken!.isEmpty) {
             return const AuthScreen();
           }
           return HomeScreen();
@@ -40,7 +41,8 @@ final router = GoRouter(
       path: defaultRoute,
       builder: (context, state) {
         debugPrint(UserSharedPreferences.authToken);
-        if (UserSharedPreferences.authToken != null) {
+        if (UserSharedPreferences.authToken != null &&
+            UserSharedPreferences.authToken!.isNotEmpty) {
           debugPrint('Authorized');
           return HomeScreen();
         }

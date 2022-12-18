@@ -32,13 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ApiClient.apiErrors.listen(
-        (value) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(value),
-          ),
-        ),
-      );
+      ApiClient.apiErrors.listen((value) => {
+            if (mounted)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(value),
+                  ),
+                ),
+              }
+          });
     });
   }
 

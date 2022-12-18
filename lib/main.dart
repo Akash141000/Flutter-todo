@@ -44,8 +44,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc.authBlocInstance),
-        BlocProvider(
-            create: (context) => TodoBloc.todoBlocInstance..getTodos()),
+        BlocProvider(create: (context) => TodoBloc.todoBlocInstance),
       ],
       child: BlocBuilder<AuthBloc, Auth?>(
         builder: ((context, authState) => MaterialApp.router(

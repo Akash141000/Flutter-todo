@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/api/client.dart';
 
+import '../models/todo/todo.bloc.dart';
+
 class UserSharedPreferences {
   static String? authToken;
   static SharedPreferences? _preferences;
@@ -11,7 +13,10 @@ class UserSharedPreferences {
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
     String authToken = await getToken();
-    ApiClient.dio.options.headers[HttpHeaders.authorizationHeader] = authToken;
+    if (authToken.isNotEmpty) {
+      ApiClient.dio.options.headers[HttpHeaders.authorizationHeader] =
+          authToken;
+    }
   }
 
   static Future setToken(String? token) async {
@@ -20,14 +25,18 @@ class UserSharedPreferences {
     }
     authToken = token;
     await _preferences!.setString('token', token);
+    await TodoBloc.todoBlocInstance.getTodos();
     return;
   }
 
   static Future getToken() async {
     if (_preferences == null) {
-      return;
+      return "";
     }
     authToken = _preferences!.getString('token');
+    if (authToken == null) {
+      return "";
+    }
     return authToken;
   }
 
@@ -38,7 +47,7 @@ class UserSharedPreferences {
       return;
     }
     _preferences!.remove('token');
-    authToken = null;
+    authToken = "";
     return;
   }
 }

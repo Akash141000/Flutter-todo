@@ -8,12 +8,13 @@ class TodoBloc extends Cubit<List<Todo>> {
 
   void addTodo(Todo newTodo) => emit([...state, newTodo]);
 
-  void getTodos() async {
+  Future<void> getTodos() async {
     var response = await Apis.getTodosAPI();
     var data = response["data"];
     for (var todo in List.from(data['todoList'])) {
       addTodo(Todo(
           todo['_id'], todo['name'], todo['description'], todo['completed']));
     }
+    return;
   }
 }
