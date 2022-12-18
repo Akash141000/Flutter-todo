@@ -41,51 +41,41 @@ class TodoListItem extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Dismissible(
+        direction: DismissDirection.endToStart,
+        background: Container(
+          padding: const EdgeInsets.only(right: 10),
+          alignment: Alignment.centerRight,
+          child: const CircleAvatar(
+            backgroundColor: Colors.red,
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
+        ),
         key: Key(_todo.id),
         confirmDismiss: (direction) async {
           debugPrint("DISMISS");
           var deleteTodo = await showAlertDialog(context);
           return deleteTodo;
         },
-        child: Container(
-          color: _todo.completed ? Colors.blueAccent : Colors.red,
-          margin: const EdgeInsets.only(bottom: 1),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(left: 10, top: 10),
-                color: Colors.transparent,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _todo.name,
-                        style: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        _todo.description,
-                        style: const TextStyle(
-                            overflow: TextOverflow.fade,
-                            color: Colors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ]),
-              ),
-              Container(
-                padding: const EdgeInsets.only(right: 10),
-                child: Text(_todo.completed.toString(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.yellowAccent)),
-              ),
-            ],
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.black, width: 0.1),
+              borderRadius: BorderRadius.circular(0.1)),
+          tileColor: Colors.white30,
+          subtitle: Text(_todo.description),
+          title: Text(
+            _todo.name,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          trailing: IconButton(
+            padding: const EdgeInsets.all(1.0),
+            onPressed: (() => debugPrint("ICON")),
+            icon: CircleAvatar(
+              backgroundColor: _todo.completed ? Colors.green : Colors.red,
+              child: const Icon(Icons.edit, color: Colors.white),
+            ),
           ),
         ),
       ),
