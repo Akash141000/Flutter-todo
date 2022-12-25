@@ -6,9 +6,8 @@ import 'package:todo/api/client.dart';
 import 'package:todo/models/auth/auth.model.dart';
 import 'package:todo/models/bloc_observer/observer.bloc.dart';
 import 'package:todo/models/todo/todo.bloc.dart';
-import 'package:todo/routes/navigation.dart';
+import 'package:todo/routes/router.dart';
 import 'package:todo/store/shared_preference.dart';
-
 import 'models/auth/auth.bloc.dart';
 
 void main() async {
@@ -48,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: BlocBuilder<AuthBloc, Auth?>(
         builder: ((context, authState) => MaterialApp.router(
-              title: 'My Todo',
+              title: 'My Todos',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primarySwatch: Colors.blue,

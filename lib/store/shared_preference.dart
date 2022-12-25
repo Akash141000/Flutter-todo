@@ -14,8 +14,7 @@ class UserSharedPreferences {
     _preferences = await SharedPreferences.getInstance();
     String authToken = await getToken();
     if (authToken.isNotEmpty) {
-      ApiClient.dio.options.headers[HttpHeaders.authorizationHeader] =
-          authToken;
+      ApiClient.setAuthHeader(authToken);
     }
   }
 
@@ -25,6 +24,7 @@ class UserSharedPreferences {
     }
     authToken = token;
     await _preferences!.setString('token', token);
+    ApiClient.setAuthHeader(authToken!);
     await TodoBloc.todoBlocInstance.getTodos();
     return;
   }

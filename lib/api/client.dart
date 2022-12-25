@@ -1,11 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'dart:convert';
-
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:todo/store/shared_preference.dart';
-import 'package:todo/utils/utils.dart';
 
 class ApiClient {
   static late final Dio dio;
@@ -23,6 +20,10 @@ class ApiClient {
 
     dio.interceptors.add(
         InterceptorsWrapper(onRequest: requestHandler, onError: errorHandler));
+  }
+
+  static setAuthHeader(String authToken) {
+    dio.options.headers[HttpHeaders.authorizationHeader] = authToken;
   }
 
   requestHandler(RequestOptions options, RequestInterceptorHandler handler) {

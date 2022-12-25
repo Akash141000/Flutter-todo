@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo/main.dart';
 import 'package:todo/models/auth/auth.model.dart';
 import 'package:todo/models/todo/todo.model.dart';
+import 'package:todo/screens/login/login.dart';
 import '../../../models/auth/auth.bloc.dart';
 import '../../../models/todo/todo.bloc.dart';
 
@@ -80,7 +80,7 @@ class ProfileFragment extends StatelessWidget {
                         if (!mounted) {
                           return;
                         }
-                        GoRouter.of(context).replace(defaultRoute);
+                        context.go(loginRoute);
                       },
                       child: const Text('LOGOUT')),
                 ),

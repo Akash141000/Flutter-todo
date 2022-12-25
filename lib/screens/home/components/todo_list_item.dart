@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo/routes/routes.path.dart';
 
 import '../../../models/todo/todo.model.dart';
 
@@ -71,7 +73,7 @@ class TodoListItem extends StatelessWidget {
           ),
           trailing: IconButton(
             padding: const EdgeInsets.all(1.0),
-            onPressed: (() => debugPrint("ICON")),
+            onPressed: (() => context.go(todoItemShell, extra: _todo)),
             icon: CircleAvatar(
               backgroundColor: _todo.completed ? Colors.green : Colors.red,
               child: const Icon(Icons.edit, color: Colors.white),

@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                               if (!mounted) {
                                 return;
                               }
-                              GoRouter.of(context).go(defaultRoute);
+                              context.go(defaultRoute);
                             }
                           },
                           child: const Text('SUBMIT'),
